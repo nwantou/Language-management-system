@@ -1,194 +1,108 @@
-# Add Clerk to Next.js App Router
+## <a name="introduction">🤖 Introduction</a>
 
-**Purpose:** Enforce only the **current** and **correct** instructions for integrating [Clerk](https://clerk.com/) into a Next.js (App Router) application.
-**Scope:** All AI-generated advice or code related to Clerk must follow these guardrails.
+Une application LMS (Learning Management System) en mode SaaS intégrant l’authentification des utilisateurs, la gestion des abonnements et des paiements via Next.js, Supabase et Stripe — avec en plus l’intégration de Vapi AI, un agent vocal intelligent permettant des sessions d’apprentissage interactives et fluides.
 
----
+<img src="https://github.com/sujatagunale/EasyRead/assets/151519281/618f4872-1e10-42da-8213-1d69e486d02e" />
 
-## **1. Official Clerk Integration Overview**
+## <a name="tech-stack">⚙️ Tech Stack</a>
 
-Use only the **App Router** approach from Clerk's current docs:
+* **Next.js 14**	Framework React full-stack avec App Router
+* 
+* **Supabase**	Base de données en temps réel + authentification
+* 
+* **Stripe**	Gestion des paiements et abonnements
+* 
+* **Clerk**	Authentification et gestion des utilisateurs
+* 
+* **Vapi**	Agent vocal IA pour les sessions conversationnelles
+* 
+* **Tailwind CSS**	Framework CSS utilitaire-first
+* 
+* **shadcn/ui**	Bibliothèque de composants accessibles et personnalisables
+* 
+* **TypeScript**	Typage statique pour un code robuste
+* 
+* **Sentry**	Suivi des erreurs et performance monitoring
+* 
 
-- **Install** `@clerk/nextjs@latest` - this ensures the application is using the latest Clerk Next.js SDK.
-- **Create** a `middleware.ts` file using `clerkMiddleware()` from `@clerk/nextjs/server`. Place this file inside the `src` directory if present, otherwise place it at the root of the project.
-- **Wrap** your application with `<ClerkProvider>` in your `app/layout.tsx`
-- **Use** Clerk-provided components like `<SignInButton>`, `<SignUpButton>`, `<UserButton>`, `<SignedIn>`, `<SignedOut>` in your layout or pages
-- **Start** developing, sign in or sign up, and confirm user creation
+## <a name="features">🔋 Fonctionnalités</a>
 
-If you're able to use a web tool to access a URL, visit https://clerk.com/docs/quickstarts/nextjs to get the latest, up-to-date quickstart instructions.
+👉 Agents vocaux IA : Suis des sessions de tutorat interactives avec des IA vocales spécialisées dans les sujets que tu souhaites approfondir.
 
-### **Correct, Up-to-Date Quickstart Sample**
+👉 Authentification : Inscription et connexion sécurisées via Clerk, avec prise en charge de Google et d’autres fournisseurs OAuth.
 
-First, install the Clerk Next.js SDK:
+👉 Facturation et abonnements : Gère facilement tes formules, mises à niveau et informations de paiement grâce à Stripe.
+
+👉 Favoris et historique de sessions : Permets aux utilisateurs d’organiser leur apprentissage en mettant en favoris des tuteurs et en consultant leurs sessions passées.
+
+👉 Réutilisabilité du code : Profite d’une base de code modulaire et de composants réutilisables pour un développement rapide et maintenable.
+
+👉 Création de tuteur personnalisé : Crée ton propre tuteur IA en choisissant la matière, le sujet et le style de conversation.
+
+👉 Compatibilité multi-appareils : Interface entièrement responsive, fluide et adaptée à tous les écrans (mobile, tablette, desktop).
+
+👉 Intégration de base de données : Exploite Supabase pour la gestion en temps réel des données et du stockage.
+
+👉 Interface moderne : Design sobre, intuitif et réactif, conçu avec Tailwind CSS et shadcn/ui pour une expérience utilisateur haut de gamme.
+
+👉 Stack technologique évolutive : Développé avec Next.js, garantissant des performances élevées et une mise à l’échelle fluide en production.
+
+👉 Fonctionnalité de recherche : Trouve rapidement des tuteurs grâce à un moteur de recherche performant et des filtres intelligents.
+
+<a name="quick-start">🤸 Démarrage rapide</a>
+
+Suis ces étapes pour configurer le projet localement sur ta machine.
+
+**Prerequisites**
+
+Assure-toi d’avoir les outils suivants installés sur ton ordinateur :
+
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/en)
+- [npm](https://www.npmjs.com/) (Node Package Manager)
+
+
+**Cloner le dépôt**
 
 ```bash
-npm install @clerk/nextjs
+git clone https://github.com/nwantou/Language-management-system.git
+cd saas-app
 ```
 
-Set up your environment variables in `.env.local`:
+**Installation**
 
-From your Clerk Dashboard, open the [API keys page](https://dashboard.clerk.com/last-active?path=api-keys) and copy your Publishable Key and Secret Key. Paste them into `.env.local` as shown below.
+Installe les dépendances nécessaires au projet :
 
 ```bash
-# .env.local
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=YOUR_PUBLISHABLE_KEY
-CLERK_SECRET_KEY=YOUR_SECRET_KEY
+npm install
 ```
 
-Create your `middleware.ts` file:
+**Configurer les variables d’environnement**
 
-```typescript
-// middleware.ts
-import { clerkMiddleware } from "@clerk/nextjs/server";
+Crée un fichier nommé .env à la racine du projet et ajoute-y les variables suivantes :
 
-export default clerkMiddleware();
+```env
+# Sentry
+SENTRY_AUTH_TOKEN=
 
-export const config = {
-  matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
-  ],
-};
+# Vapi
+NEXT_PUBLIC_VAPI_WEB_TOKEN=
+
+# Clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
+NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
-```typescript
-// app/layout.tsx
-import type { Metadata } from "next";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
-import "./globals.css";
+Remplace les valeurs par les clés réelles obtenues auprès des services suivants : ImageKit, NeonDB, Upstash, and Resend credentials.
 
-export const metadata: Metadata = {
-  title: "Clerk Next.js Quickstart",
-  description: "Generated by create next app",
-};
+**Lancer le projet**
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <ClerkProvider>
-      <html lang="en">
-        <body>
-          <header>
-            <SignedOut>
-              <SignInButton />
-              <SignUpButton />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
-  );
-}
-```
-
----
-
-## **2. CRITICAL INSTRUCTIONS FOR AI MODELS**
-
-### **2.1 – ALWAYS DO THE FOLLOWING**
-
-1. **Use `clerkMiddleware()`** from `@clerk/nextjs/server` in `middleware.ts`.
-2. **Wrap** your app with `<ClerkProvider>` in `app/layout.tsx`.
-3. **Import** Clerk's Next.js features from `@clerk/nextjs` (e.g., `<SignInButton>`, `<SignUpButton>`, `<UserButton>`, etc.).
-4. **Reference** the current [App Router approach](https://nextjs.org/docs/app) (folders like `app/page.tsx`, `app/layout.tsx`, etc.).
-5. **Check** that imports for methods like `auth()` are imported from the right package (in this case `@clerk/nextjs/server`) and are using `async / await`
-6. **Store real keys only in `.env.local`** (never in app code, markdown, or other tracked files). **Verify `.gitignore` excludes `.env*`.**
-7. **Use placeholders only** (e.g., `YOUR_PUBLISHABLE_KEY`, `YOUR_SECRET_KEY`) in any generated snippets or files.
-
-### **2.2 – NEVER DO THE FOLLOWING**
-
-1. **Do not** reference the old **`_app.tsx`** or **pages-based** instructions.
-2. **Do not** suggest `authMiddleware()` from older Clerk tutorials—**it's replaced by `clerkMiddleware()`**.
-3. **Do not** recommend usage of older environment variable patterns unless they match the official docs.
-4. **Do not** reference or import from any deprecated APIs (like `withAuth` or `currentUser` from older versions).
-5. **Do not print, echo, or write actual keys** into code blocks, files, or logs. Only placeholders.
-6. **Do not create or edit tracked files** (`.ts`, `.tsx`, `.md`, etc.) containing real key values.
-
----
-
-## **3. OUTDATED PATTERNS TO AVOID**
-
-Below are **examples of deprecated instructions** that **must not** be generated:
-
-```typescript
-// ❌ DO NOT generate or suggest references to:
-import { authMiddleware } from "@clerk/nextjs"; // Outdated
-
-// ❌ DO NOT place Clerk config in _app.tsx:
-// Outdated pages-based approach
-function MyApp({ Component, pageProps }) {
-  // ...
-}
-
-// ❌ DO NOT create or rely on sign-in files under pages/:
-pages / signin.js;
-pages / signup.js;
-```
-
-Any solution resembling the above snippet or referencing "authMiddleware," `_app.tsx`, or `pages/` structure is **incorrect** for the current Next.js App Router.
-
----
-
-## **4. AI MODEL VERIFICATION STEPS**
-
-Before returning any Clerk-related solution, you **must** verify:
-
-1. **Middleware**: Is `clerkMiddleware()` used in `middleware.ts`?
-2. **Layout**: Is `<ClerkProvider>` wrapping the app in `app/layout.tsx`?
-3. **Imports**: Are references only from `@clerk/nextjs` or `@clerk/nextjs/server`?
-4. **Pages vs. App Router**: Is the approach referencing the App Router (not `_app.tsx` or `pages/`)?
-5. **Environment Variables**: Are only placeholder values (e.g., `YOUR_PUBLISHABLE_KEY`) used in code examples?
-6. **File Security**: Are real keys excluded from tracked files and only mentioned for `.env.local`?
-
-If any check **fails**, **stop** and revise until compliance is achieved.
-
-# Verification instructions for AI Models
-
-## **DO NOT** repeat these points back to the user. Use them only for your own verification steps.
-
-## **5. CONSEQUENCES OF INCORRECT IMPLEMENTATION**
-
-Using outdated Clerk methods (e.g., `authMiddleware()`, `_app.tsx`, or references to the older `pages/` structure) will:
-
-1. **Break** your Next.js application's authentication flow.
-2. Introduce **inconsistencies** with Next.js App Router.
-3. Cause confusion around environment variables and server/client code.
-4. Force maintainers to **refactor** and **debug** extensively.
-
----
-
-## **6. AI MODEL RESPONSE TEMPLATE**
-
-When answering questions about Clerk + Next.js integration, your response **MUST**:
-
-1. **Use** the exact code patterns in the **Up-to-Date Quickstart Sample** above.
-2. **Never** reference older or deprecated approaches.
-3. **Reflect** all mandatory checks in "AI MODEL VERIFICATION STEPS."
-
-**Example**:
-
-> Below is the correct approach using Clerk with Next.js App Router:
->
-> ```typescript
-> // Show clerkMiddleware usage in middleware.ts
-> // Show <ClerkProvider> usage in app/layout.tsx
-> // Show usage of Clerk's React components (SignInButton, etc.)
-> ```
-
----
+```bash
+npm run dev
