@@ -2,7 +2,7 @@
 
 Une application LMS (Learning Management System) en mode SaaS intégrant l’authentification des utilisateurs, la gestion des abonnements et des paiements via Next.js, Supabase et Stripe — avec en plus l’intégration de Vapi AI, un agent vocal intelligent permettant des sessions d’apprentissage interactives et fluides.
 
-<img src="" />
+<img src="https://github.com/nwantou/Language-management-system/blob/main/public/site%20lms.PNG" />
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
