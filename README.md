@@ -2,7 +2,7 @@
 
 Une application LMS (Learning Management System) en mode SaaS intégrant l’authentification des utilisateurs, la gestion des abonnements et des paiements via Next.js, Supabase et Stripe — avec en plus l’intégration de Vapi AI, un agent vocal intelligent permettant des sessions d’apprentissage interactives et fluides.
 
-<img src="https://github.com/sujatagunale/EasyRead/assets/151519281/618f4872-1e10-42da-8213-1d69e486d02e" />
+<img src="" />
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
